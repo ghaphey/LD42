@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float throwForce = 10.0f;
     [SerializeField] private float interactRange = 1.0f;
     [SerializeField] private Vector3 boxHold;
-    [SerializeField] private AudioClip placeBoxSFX;
-    [SerializeField] private AudioClip hitBoxSFX;
 
 
     private CharacterController charCont;
@@ -20,14 +18,11 @@ public class PlayerController : MonoBehaviour {
     private Transform currObj = null;
     private Transform world;
 
-    private AudioSource audSrc;
-
 
     void Start () {
         facingDirection = new Vector3(1, 0, -1);
         charCont = GetComponent<CharacterController>();
         world = GameObject.FindGameObjectWithTag("World").transform;
-        audSrc = GetComponent<AudioSource>();
 	}
 	
 	void Update () {
@@ -79,7 +74,6 @@ public class PlayerController : MonoBehaviour {
         obj.localRotation = Quaternion.Euler(0, 0, 0);
         currObj = obj;
         notHolding = false;
-        audSrc.PlayOneShot(placeBoxSFX);
 
     }
 
@@ -93,7 +87,7 @@ public class PlayerController : MonoBehaviour {
         temp.AddForce(transform.forward * throwForce, ForceMode.Impulse);
         currObj = null;
         notHolding = true;
-        audSrc.PlayOneShot(hitBoxSFX);
+
     }
 
     // TAKE OBJECT
@@ -106,7 +100,6 @@ public class PlayerController : MonoBehaviour {
         {
             PickUp(currObj);
         }
-        audSrc.PlayOneShot(placeBoxSFX);
     }
 
     // GIVE OBJECT
@@ -119,7 +112,6 @@ public class PlayerController : MonoBehaviour {
             currObj = null;
             notHolding = true;
         }
-        audSrc.PlayOneShot(placeBoxSFX);
     }
 
     // MOVE PLAYER
@@ -156,6 +148,7 @@ public class PlayerController : MonoBehaviour {
         Rigidbody rb = hit.collider.attachedRigidbody;
         if (rb == null || rb.isKinematic)
             return;
+
         rb.velocity = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z) * hitForce;
     }
 }
