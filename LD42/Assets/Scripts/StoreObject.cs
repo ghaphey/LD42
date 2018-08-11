@@ -77,6 +77,11 @@ public class StoreObject : MonoBehaviour {
         }
     }
 
+    public List<GameObject> GetStoredObjects()
+    {
+        return storedObjects;
+    }
+
     public int NumObjects()
     {
         return storedObjects.Count;

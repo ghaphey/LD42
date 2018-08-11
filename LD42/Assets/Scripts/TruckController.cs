@@ -7,16 +7,20 @@ using TMPro;
 public class TruckController : MonoBehaviour {
 
     [SerializeField] private List<GameObject> boxTypes;
+    [Header("Truck Properties")]
+    [SerializeField] type truckType;
     [SerializeField] private float driveUpDistance = 0.4f;
     [SerializeField] private float driveAwayDistance = -0.5f;
     [SerializeField] private float movementSpeed = 2.0f;
-    [SerializeField] [Range(10, 120)] private int maxSpawnTime;
-    [SerializeField] [Range(1, 10)] private int minSpawnTime;
+    [SerializeField] private int maxSpawnTime = 30;
+    [SerializeField] private int minSpawnTime = 1;
     [Header("Counter Properties")]
     [SerializeField] TextMeshPro counter;
     [SerializeField] private int maxLoiterTime = 20;
 
     private StoreObject myTruck;
+
+    private enum type { delivery, pickup };
 
     private Vector3 dest;
     private Vector3 oldPos;
@@ -29,6 +33,8 @@ public class TruckController : MonoBehaviour {
 
     private float loiterTimer = 0.0f;
 
+    private OrderLight displayLights;
+
 
     void Start ()
     {
@@ -36,11 +42,35 @@ public class TruckController : MonoBehaviour {
         dest = myTruck.transform.localPosition;
         counter.text = "-";
         SetSpawnCounter();
+
+        if (truckType == type.pickup)
+        {
+            displayLights = GetComponentInChildren<OrderLight>();
+            if (displayLights == null)
+                print("Error getting display lights");
+        }
     }
 
     private void Update()
     {
-        // move truck to the current destination
+        switch(truckType)
+        {
+            case type.delivery:
+                DeliveryTruck();
+                break;
+            case type.pickup:
+                PickupTruck();
+                break;
+        }
+
+    }
+
+    // DELIVERY TRUCK
+    // move forward with boxes based on a spawn timer, which starts loiter timer
+    // when loiter timer expires, eject remaining boxes and move backward
+    // reset spawn timer
+    private void DeliveryTruck()
+    {
         if (myTruck.transform.localPosition != dest)
         {
             LerpTruckToDest();
@@ -60,10 +90,21 @@ public class TruckController : MonoBehaviour {
             // if the loiter timer expires, drive away (and force the remaining boxes off)
             else
             {
-                DriveAway();
+                EndDelivery();
             }
         }
+    }
 
+    private void PickupTruck()
+    {
+        if (myTruck.transform.localPosition != dest)
+        {
+            LerpTruckToDest();
+        }
+        if (spawnWait && Time.time >= spawnTimer)
+        {
+            StartPickup();
+        }
     }
 
     // SET SPAWN COUNTER
@@ -117,16 +158,39 @@ public class TruckController : MonoBehaviour {
         }
     }
 
-    // DRIVE AWAY
+    // End Delivery
     // sets the spawn counter, drives away from entry, and ejects remaining objects
     // CONDITION: should have been in delivery state before calling
-    private void DriveAway()
+    private void EndDelivery()
     {
         spawnWait = true;
         SetSpawnCounter();
         myTruck.EjectObjects();
         DriveTo(driveAwayDistance);
         counter.text = "-";
+    }
+
+    private void StartPickup()
+    {
+        spawnWait = false;
+        DriveTo(driveUpDistance);
+        PickOrderColors();
+        loiterTimer = Time.time + maxLoiterTime;
+    }
+
+    // PICK ORDER COLORS
+    // construct a list of colors, then apply that list to the order light
+    // CONDITION: must be a delivery vehicle with a OrderLight attached to a child
+    private void PickOrderColors()
+    {
+        List<GameObject> order = new List<GameObject>();
+        for (int i = 0; i < myTruck.maxObjects; i++)
+        {
+            int whichBox = Mathf.FloorToInt(UnityEngine.Random.Range(0, boxTypes.Count));
+            order.Add(boxTypes[whichBox]);
+        }
+        displayLights.SetLights(order);
+
     }
 
 }
