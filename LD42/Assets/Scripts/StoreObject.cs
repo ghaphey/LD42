@@ -6,13 +6,16 @@ using UnityEngine;
 public class StoreObject : MonoBehaviour {
 
     [SerializeField] private List<GameObject> storedObjects = new List<GameObject> { };
-    [SerializeField] public readonly int maxObjects = 3;
+    [SerializeField] public int maxObjects = 3;
     [SerializeField] private float objectSizeOffset = 0.6f;
     [SerializeField] private float ejectForce = 500.0f;
+
+    private Transform world;
 
     private void Start()
     {
         ResetStoreTransforms();
+        world = GameObject.FindGameObjectWithTag("World").transform;
     }
 
     // RECEIVE OBJECT
@@ -24,8 +27,9 @@ public class StoreObject : MonoBehaviour {
         {
             storedObjects.Add(obj);
             obj.transform.parent = transform;
-            obj.transform.localPosition = new Vector3(0, storedObjects.Count * objectSizeOffset * 1.1f, 0);
+            obj.GetComponent<BoxCollider>().enabled = false;
             obj.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            ResetStoreTransforms();
             return true;
         }
         return false;
@@ -41,6 +45,7 @@ public class StoreObject : MonoBehaviour {
             GameObject temp = storedObjects[0];
             storedObjects.RemoveAt(0);
             ResetStoreTransforms();
+            temp.GetComponent<BoxCollider>().enabled = true;
             return temp.transform;
         }
         return null;
@@ -52,8 +57,7 @@ public class StoreObject : MonoBehaviour {
     {
         for (int i = 0; i < storedObjects.Count; i++)
         {
-            // TODO: remove hardcoded numbers
-            storedObjects[i].transform.localPosition = new Vector3(0, objectSizeOffset + i * objectSizeOffset * 1.1f, 0);
+            storedObjects[i].transform.localPosition = new Vector3(0, objectSizeOffset + i * objectSizeOffset * 1.05f, 0);
         }
     }
 
@@ -61,13 +65,20 @@ public class StoreObject : MonoBehaviour {
     // forcefully throws objects away
     public void EjectObjects()
     {
-        foreach (GameObject obj in storedObjects)
+        for (int i = storedObjects.Count - 1; i > -1; i--)
         {
-            storedObjects.Remove(obj);
-            Rigidbody rb = obj.GetComponent<Rigidbody>();
+            GameObject temp = storedObjects[i];
+            storedObjects.RemoveAt(i);
+            temp.transform.parent = world;
+            Rigidbody rb = temp.GetComponent<Rigidbody>();
             rb.isKinematic = false;
-            rb.AddForce(transform.right * ejectForce, ForceMode.Impulse);
+            rb.AddForce(new Vector3(1f,0.3f,0) * ejectForce, ForceMode.Impulse);
         }
+    }
+
+    public int NumObjects()
+    {
+        return storedObjects.Count;
     }
 
 }

@@ -16,10 +16,13 @@ public class PlayerController : MonoBehaviour {
     private Vector3 facingDirection;
     private bool notHolding = true;
     private Transform currObj = null;
+    private Transform world;
 
-	void Start () {
+
+    void Start () {
         facingDirection = new Vector3(1, 0, -1);
         charCont = GetComponent<CharacterController>();
+        world = GameObject.FindGameObjectWithTag("World").transform;
 	}
 	
 	void Update () {
@@ -78,7 +81,7 @@ public class PlayerController : MonoBehaviour {
     // Lets go of an object, resets its parent to world, renables rigidbody physics
     private void DropObject()
     {
-        currObj.parent = transform.parent;
+        currObj.parent = world;
         Rigidbody temp = currObj.GetComponent<Rigidbody>();
         temp.isKinematic = false;
         temp.AddForce(transform.forward * throwForce, ForceMode.Impulse);

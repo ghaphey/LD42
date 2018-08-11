@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Box
   - Shelf
+  - World
   layers:
   - Default
   - TransparentFX
