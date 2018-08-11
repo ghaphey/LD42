@@ -171,7 +171,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705683971487784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.3, y: 0.90000004, z: -3}
+  m_LocalPosition: {x: -7, y: 0.90000004, z: 0}
   m_LocalScale: {x: 4.6, y: 1.6999999, z: 1.5}
   m_Children:
   - {fileID: 4103168182339286}
@@ -1013,6 +1013,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storedObjects: []
+  maxObjects: 3
   objectSizeOffset: 0.6
   ejectForce: 400
 --- !u!114 &114244431767801664
@@ -1036,7 +1037,7 @@ MonoBehaviour:
   maxSpawnTime: 30
   minSpawnTime: 1
   counter: {fileID: 114277780102335508}
-  maxLoiterTime: 10
+  maxLoiterTime: 20
 --- !u!114 &114277780102335508
 MonoBehaviour:
   m_ObjectHideFlags: 1

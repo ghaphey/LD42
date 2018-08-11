@@ -70,6 +70,7 @@ public class StoreObject : MonoBehaviour {
             GameObject temp = storedObjects[i];
             storedObjects.RemoveAt(i);
             temp.transform.parent = world;
+            temp.GetComponent<BoxCollider>().enabled = true;
             Rigidbody rb = temp.GetComponent<Rigidbody>();
             rb.isKinematic = false;
             rb.AddForce(new Vector3(1f,0.3f,0) * ejectForce, ForceMode.Impulse);
