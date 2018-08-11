@@ -77,6 +77,15 @@ public class StoreObject : MonoBehaviour {
         }
     }
 
+    public void RemoveObjects()
+    {
+        foreach (GameObject obj in storedObjects)
+        {
+            Destroy(obj);
+        }
+        storedObjects.Clear();
+    }
+
     public List<GameObject> GetStoredObjects()
     {
         return storedObjects;

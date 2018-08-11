@@ -83,7 +83,7 @@ public class TruckController : MonoBehaviour {
         // while in delivery mode
         else if (spawnWait == false)
         {
-            if ((Time.time < loiterTimer) & (myTruck.NumObjects() > 0))
+            if ((Time.time < loiterTimer) && (myTruck.NumObjects() > 0))
             {
                 counter.text = Mathf.FloorToInt(loiterTimer - Time.time).ToString();
             }
@@ -105,7 +105,20 @@ public class TruckController : MonoBehaviour {
         {
             StartPickup();
         }
+        else if (spawnWait == false)
+        {
+            // if the cargo matches order, can leave right away
+            if (Time.time < loiterTimer && !CompareCargo())
+            {
+                counter.text = Mathf.FloorToInt(loiterTimer - Time.time).ToString();
+            }
+            else
+            {
+                EndPickup();
+            }
+        }
     }
+
 
     // SET SPAWN COUNTER
     // pick a random number between min / max spawn time and set a timer
@@ -158,7 +171,7 @@ public class TruckController : MonoBehaviour {
         }
     }
 
-    // End Delivery
+    // END DELIVERY
     // sets the spawn counter, drives away from entry, and ejects remaining objects
     // CONDITION: should have been in delivery state before calling
     private void EndDelivery()
@@ -170,10 +183,15 @@ public class TruckController : MonoBehaviour {
         counter.text = "-";
     }
 
+    // START PICKUP 
+    // set loiter timer, drive up, and pick order of boxes
+    // checks for previous objects in cargo and deletes them
     private void StartPickup()
     {
         spawnWait = false;
         DriveTo(driveUpDistance);
+        if (myTruck.NumObjects() > 0)
+            myTruck.RemoveObjects();
         PickOrderColors();
         loiterTimer = Time.time + maxLoiterTime;
     }
@@ -193,4 +211,22 @@ public class TruckController : MonoBehaviour {
 
     }
 
+    // COMPARE CARGO
+    // compares current cargo to order request
+    // if match, return true
+    private bool CompareCargo()
+    {
+        return displayLights.CompareLights(myTruck.GetStoredObjects());
+    }
+
+    // END PICKUP
+    // resets spawn counter, drive away
+    private void EndPickup()
+    {
+        spawnWait = true;
+        SetSpawnCounter();
+        DriveTo(driveAwayDistance);
+        counter.text = "-";
+        displayLights.Reset();
+    }
 }
