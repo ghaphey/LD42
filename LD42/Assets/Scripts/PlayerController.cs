@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private float movementSpeed = 1.0f;
     [SerializeField] private float hitForce = 2.0f;
+    [SerializeField] private float throwForce = 10.0f;
     [SerializeField] private float interactRange = 1.0f;
     [SerializeField] private Vector3 boxHold;
 
@@ -78,12 +79,17 @@ public class PlayerController : MonoBehaviour {
     private void DropObject()
     {
         currObj.parent = transform.parent;
-        currObj.GetComponent<Rigidbody>().isKinematic = false;
+        Rigidbody temp = currObj.GetComponent<Rigidbody>();
+        temp.isKinematic = false;
+        temp.AddForce(transform.forward * throwForce, ForceMode.Impulse);
         currObj = null;
         notHolding = true;
 
     }
 
+    // TAKE OBJECT
+    // Remove object from shelf or currently holding receptical
+    // REQUIRES: StoreObject script on shelf object
     private void TakeObject(Transform t)
     {
         currObj = t.GetComponent<StoreObject>().DispenseObject();
@@ -93,7 +99,9 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-
+    // GIVE OBJECT
+    // place object on shelf
+    // REQUIRES: StoreObject script
     private void GiveObject(Transform t)
     {
         if (t.GetComponent<StoreObject>().ReceiveObject(currObj.gameObject))
