@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65810090506901248}
   - component: {fileID: 54804958974165014}
   m_Layer: 0
-  m_Name: RedBox
+  m_Name: BlueBox
   m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: f0db9c8fe74733944bf46b0ada86785b, type: 2}
+  - {fileID: 2100000, guid: 376e0973a99cd0540a384f3687e06d50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -6,8 +6,9 @@ using UnityEngine;
 public class StoreObject : MonoBehaviour {
 
     [SerializeField] private List<GameObject> storedObjects = new List<GameObject> { };
-    [SerializeField] private int maxObjects = 3;
+    [SerializeField] public readonly int maxObjects = 3;
     [SerializeField] private float objectSizeOffset = 0.6f;
+    [SerializeField] private float ejectForce = 500.0f;
 
     private void Start()
     {
@@ -55,4 +56,18 @@ public class StoreObject : MonoBehaviour {
             storedObjects[i].transform.localPosition = new Vector3(0, objectSizeOffset + i * objectSizeOffset * 1.1f, 0);
         }
     }
+
+    // EJECT OBJECTS
+    // forcefully throws objects away
+    public void EjectObjects()
+    {
+        foreach (GameObject obj in storedObjects)
+        {
+            storedObjects.Remove(obj);
+            Rigidbody rb = obj.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.AddForce(transform.right * ejectForce, ForceMode.Impulse);
+        }
+    }
+
 }
