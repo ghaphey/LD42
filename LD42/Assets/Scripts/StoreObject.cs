@@ -63,8 +63,11 @@ public class StoreObject : MonoBehaviour {
 
     // EJECT OBJECTS
     // forcefully throws objects away
-    public void EjectObjects()
+    // returns true if threw stuff away
+    public bool EjectObjects()
     {
+        if (storedObjects.Count <= 0)
+            return false;
         for (int i = storedObjects.Count - 1; i > -1; i--)
         {
             GameObject temp = storedObjects[i];
@@ -75,6 +78,7 @@ public class StoreObject : MonoBehaviour {
             rb.isKinematic = false;
             rb.AddForce(new Vector3(1f,0.3f,0) * ejectForce, ForceMode.Impulse);
         }
+        return true;
     }
 
     public void RemoveObjects()
