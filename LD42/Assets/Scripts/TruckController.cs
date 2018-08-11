@@ -17,6 +17,13 @@ public class TruckController : MonoBehaviour {
     [Header("Counter Properties")]
     [SerializeField] TextMeshPro counter;
     [SerializeField] private int maxLoiterTime = 20;
+    [Header("Sound Properties")]
+    [SerializeField] AudioClip arriveSFX;
+    [SerializeField] AudioClip leaveSFX;
+    [SerializeField] AudioClip hitSFX;
+    [SerializeField] AudioClip honkSFX;
+    [SerializeField] AudioClip successSFX;
+    [SerializeField] AudioClip clappingSFX;
 
     private StoreObject myTruck;
 
@@ -34,11 +41,13 @@ public class TruckController : MonoBehaviour {
     private float loiterTimer = 0.0f;
 
     private OrderLight displayLights;
+    private AudioSource audSrc;
 
 
     void Start ()
     {
         myTruck = GetComponentInChildren<StoreObject>();
+        audSrc = GetComponent<AudioSource>();
         dest = myTruck.transform.localPosition;
         counter.text = "-";
         SetSpawnCounter();
@@ -95,6 +104,10 @@ public class TruckController : MonoBehaviour {
         }
     }
 
+    // PICKUP TRUCK
+    // move forward with order based on spawn timer, start loiter timer
+    // when loiter time expires, leave
+    // if get the right cargo in time, leaves early and plays victory music
     private void PickupTruck()
     {
         if (myTruck.transform.localPosition != dest)
@@ -146,6 +159,7 @@ public class TruckController : MonoBehaviour {
         SpawnBoxes();
         DriveTo(driveUpDistance);
         loiterTimer = Time.time + maxLoiterTime;
+        audSrc.PlayOneShot(arriveSFX);
     }
 
     // DRIVE TO
@@ -178,9 +192,14 @@ public class TruckController : MonoBehaviour {
     {
         spawnWait = true;
         SetSpawnCounter();
-        myTruck.EjectObjects();
+        if (myTruck.EjectObjects())
+        {
+            audSrc.PlayOneShot(honkSFX);
+            audSrc.PlayOneShot(hitSFX);
+        }
         DriveTo(driveAwayDistance);
         counter.text = "-";
+        audSrc.PlayOneShot(leaveSFX);
     }
 
     // START PICKUP 
@@ -194,6 +213,7 @@ public class TruckController : MonoBehaviour {
             myTruck.RemoveObjects();
         PickOrderColors();
         loiterTimer = Time.time + maxLoiterTime;
+        audSrc.PlayOneShot(arriveSFX);
     }
 
     // PICK ORDER COLORS
@@ -225,8 +245,14 @@ public class TruckController : MonoBehaviour {
     {
         spawnWait = true;
         SetSpawnCounter();
+        if (CompareCargo())
+        {
+            audSrc.PlayOneShot(successSFX, 1f);
+            audSrc.PlayOneShot(clappingSFX);
+        }
         DriveTo(driveAwayDistance);
         counter.text = "-";
         displayLights.Reset();
+        audSrc.PlayOneShot(leaveSFX);
     }
 }
