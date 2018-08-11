@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    [SerializeField] float movementSpeed = 1.0f;
-    [SerializeField] float hitForce = 2.0f;
-    [SerializeField] float interactRange = 1.0f;
-    [SerializeField] Vector3 boxHold;
+    [SerializeField] private float movementSpeed = 1.0f;
+    [SerializeField] private float hitForce = 2.0f;
+    [SerializeField] private float interactRange = 1.0f;
+    [SerializeField] private Vector3 boxHold;
 
 
     private CharacterController charCont;
@@ -33,22 +33,28 @@ public class PlayerController : MonoBehaviour {
     // if the player is holding a box, and interact is pressed, it should be dropped (for now)
     private void Interact()
     {
-        if (Input.GetButtonDown("Interact") && notHolding )
+        if (Input.GetButtonDown("Interact"))
         {
             RaycastHit hit;
             if(Physics.Raycast(transform.position, transform.forward,out hit, interactRange))
             {
-                if (hit.collider.tag == "Box")
+                if (hit.collider.tag == "Box" && notHolding)
                 {
-                    notHolding = false;
                     PickUp(hit.transform);
                 }
+                else if (hit.collider.tag == "Shelf" && notHolding)
+                {
+                    TakeObject(hit.transform);
+                }
+                else if (hit.collider.tag == "Shelf" && !notHolding)
+                {
+                    GiveObject(hit.transform);
+                }
             }
-        }
-        else if (Input.GetButtonDown("Interact") && !notHolding)
-        {
-            DropObject();
-            notHolding = true;
+            else if (!notHolding)
+            {
+                DropObject();
+            }
         }
     }
 
@@ -63,6 +69,8 @@ public class PlayerController : MonoBehaviour {
         obj.transform.localPosition = boxHold;
         obj.localRotation = Quaternion.Euler(0, 0, 0);
         currObj = obj;
+        notHolding = false;
+
     }
 
     // DROP OBJECT
@@ -72,6 +80,27 @@ public class PlayerController : MonoBehaviour {
         currObj.parent = transform.parent;
         currObj.GetComponent<Rigidbody>().isKinematic = false;
         currObj = null;
+        notHolding = true;
+
+    }
+
+    private void TakeObject(Transform t)
+    {
+        currObj = t.GetComponent<StoreObject>().DispenseObject();
+        if (currObj != null)
+        {
+            PickUp(currObj);
+        }
+    }
+
+
+    private void GiveObject(Transform t)
+    {
+        if (t.GetComponent<StoreObject>().ReceiveObject(currObj.gameObject))
+        {
+            currObj = null;
+            notHolding = true;
+        }
     }
 
     // MOVE PLAYER
