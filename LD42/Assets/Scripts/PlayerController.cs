@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-
+    [Header("Properties")]
     [SerializeField] private float movementSpeed = 1.0f;
     [SerializeField] private float hitForce = 2.0f;
     [SerializeField] private float throwForce = 10.0f;
     [SerializeField] private float interactRange = 1.0f;
+    [Header("Objects")]
     [SerializeField] private Vector3 boxHold;
+    [SerializeField] private Transform bottomHalf;
+    [SerializeField] private Transform topHalf;
+    [Header("Sounds")]
     [SerializeField] private AudioClip placeBoxSFX;
     [SerializeField] private AudioClip hitBoxSFX;
 
@@ -32,11 +36,10 @@ public class PlayerController : MonoBehaviour {
 	
 	void Update () {
         MovePlayer();
-        RotatePlayer();
+        RotateBottomHalf();
+        RotateTopHalf();
         Interact();
 	}
-
-
     // INTERACT
     // If the player is within interact range of a box, it should be picked up
     // if the player is holding a box, and interact is pressed, it should be dropped (for now)
@@ -45,10 +48,15 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Interact"))
         {
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, transform.forward,out hit, interactRange))
+            if(Physics.Raycast(topHalf.position, topHalf.forward,out hit, interactRange))
             {
                 if (hit.collider.tag == "Box" && notHolding)
                 {
+                    PickUp(hit.transform);
+                }
+                if (hit.collider.tag == "Box" && !notHolding)
+                {
+                    DropObject();
                     PickUp(hit.transform);
                 }
                 else if (hit.collider.tag == "Shelf" && notHolding)
@@ -73,7 +81,7 @@ public class PlayerController : MonoBehaviour {
     // also disables rigidbody physics
     private void PickUp(Transform obj)
     {
-        obj.parent = transform;
+        obj.parent = topHalf.transform;
         obj.GetComponent<Rigidbody>().isKinematic = true;
         obj.transform.localPosition = boxHold;
         obj.localRotation = Quaternion.Euler(0, 0, 0);
@@ -139,13 +147,27 @@ public class PlayerController : MonoBehaviour {
         
     }
 
-    // ROTATE PLAYER
-    // rotates the player to face the current movement vector direction
-    private void RotatePlayer()
+    // ROTATE BOTTOM HALF
+    // rotates the bottom half to face the current movement vector direction
+    private void RotateBottomHalf()
     {
-        transform.LookAt(new Vector3(transform.position.x + facingDirection.x, 
-                                    transform.position.y, 
-                                    transform.position.z + facingDirection.z));
+        bottomHalf.LookAt(new Vector3(bottomHalf.position.x + facingDirection.x,
+                                    bottomHalf.position.y,
+                                    bottomHalf.position.z + facingDirection.z));
+    }
+
+    // ROTATE TOP HALF
+    // rotate the top half to face the current x, y mouse position
+    private void RotateTopHalf()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        int layermask = 1 << 9;
+        if (Physics.Raycast(ray, out hit, 100, layermask))
+        {
+            print(hit.collider.name);
+            topHalf.LookAt(new Vector3(hit.point.x, topHalf.position.y, hit.point.z));
+        }
     }
 
     // ON CONTROLLER COLLIDER HIT
