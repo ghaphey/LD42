@@ -10,6 +10,8 @@ public class StoreObject : MonoBehaviour {
     [SerializeField] private float objectSizeOffset = 0.6f;
     [SerializeField] private float ejectForce = 500.0f;
 
+    [SerializeField] private List<Animator> braces = new List<Animator> { };
+
     private Transform world;
 
     private void Start()
@@ -57,7 +59,19 @@ public class StoreObject : MonoBehaviour {
     {
         for (int i = 0; i < storedObjects.Count; i++)
         {
-            storedObjects[i].transform.localPosition = new Vector3(0, objectSizeOffset + i * objectSizeOffset * 1.05f, 0);
+            storedObjects[i].transform.localPosition = new Vector3(0,
+                                                        objectSizeOffset + i * objectSizeOffset * 1.05f,
+                                                        0);
+        }
+        if (braces.Count > 0)
+        {
+            for (int i = 0; i < maxObjects; i++)
+            {
+                if (i <= storedObjects.Count - 1)
+                    braces[i].SetBool("BraceClosed", true);
+                else
+                    braces[i].SetBool("BraceClosed", false);
+            }
         }
     }
 
