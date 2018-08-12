@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour {
             //if (Vector3.Distance(topHalf.position, currHit.transform.position) <= interactRange)
             {
                 currHit = hit.transform.gameObject;
-                print(currHit.name);
+                //print(currHit.name);
                 if (currHit.tag == "Box" && notHolding)
                 {
                     PickUp(currHit.transform);

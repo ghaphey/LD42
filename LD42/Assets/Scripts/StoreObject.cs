@@ -62,6 +62,7 @@ public class StoreObject : MonoBehaviour {
             storedObjects[i].transform.localPosition = new Vector3(0,
                                                         objectSizeOffset + i * objectSizeOffset * 1.05f,
                                                         0);
+            storedObjects[i].transform.rotation = Quaternion.identity;
         }
         if (braces.Count > 0)
         {
