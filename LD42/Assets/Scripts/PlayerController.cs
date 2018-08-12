@@ -38,11 +38,14 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update () {
-        MovePlayer();
-        RotateBottomHalf();
-        RotateTopHalf();
-        Interact();
-        ShowTarget();
+        if (Time.timeScale > 0f)
+        {
+            MovePlayer();
+            RotateBottomHalf();
+            RotateTopHalf();
+            ShowTarget();
+            Interact();
+        }
 	}
 
 
@@ -52,19 +55,20 @@ public class PlayerController : MonoBehaviour {
     private void Interact()
     {
         //Debug.DrawRay(topHalf.position, topHalf.forward * interactRange, Color.yellow);
-
         if (Input.GetButtonDown("Interact") && Time.time >= interactTimeDamp)
         {
             interactTimeDamp = Time.time + interactDamping;
-            //RaycastHit hit;
-            //if(Physics.Raycast(topHalf.position, topHalf.forward, out hit, interactRange))
-            if (Vector3.Distance(topHalf.position, currHit.transform.position) <= interactRange)
+            RaycastHit hit;
+            if(Physics.Raycast(topHalf.position, topHalf.forward, out hit, interactRange))
+            //if (Vector3.Distance(topHalf.position, currHit.transform.position) <= interactRange)
             {
+                currHit = hit.transform.gameObject;
+                print(currHit.name);
                 if (currHit.tag == "Box" && notHolding)
                 {
                     PickUp(currHit.transform);
                 }
-                if (currHit.tag == "Box" && !notHolding)
+                else if (currHit.tag == "Box" && !notHolding)
                 {
                     DropObject();
                     PickUp(currHit.transform);
@@ -88,7 +92,17 @@ public class PlayerController : MonoBehaviour {
 
     private void ShowTarget()
     {
-        throw new NotImplementedException();
+        /*
+        if (currHit != null && Vector3.Distance(topHalf.position, currHit.transform.position) <= interactRange)
+        {
+            targetArrow.GetComponentInChildren<MeshRenderer>().enabled = true;
+            targetArrow.transform.position = currHit.transform.position + Vector3.up * arrowOffset;
+        }
+        else
+        {
+            targetArrow.GetComponent<MeshRenderer>().enabled = false;
+
+        } */
     }
 
     // PICK UP
@@ -129,8 +143,8 @@ public class PlayerController : MonoBehaviour {
         if (currObj != null)
         {
             PickUp(currObj);
+            audSrc.PlayOneShot(placeBoxSFX);
         }
-        audSrc.PlayOneShot(placeBoxSFX);
     }
 
     // GIVE OBJECT
@@ -194,8 +208,8 @@ public class PlayerController : MonoBehaviour {
         if (hit.transform.tag != "Untagged")
         {
             Rigidbody rb = hit.collider.attachedRigidbody;
-            currHit = hit.gameObject;
-            print(currHit.name);
+            //currHit = hit.gameObject;
+            //print("hit " + currHit.name);
             if (rb == null || rb.isKinematic)
                 return;
             rb.velocity = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z) * hitForce;
