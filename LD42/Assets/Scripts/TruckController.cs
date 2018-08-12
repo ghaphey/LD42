@@ -8,7 +8,6 @@ public class TruckController : MonoBehaviour {
 
     [SerializeField] private List<GameObject> boxTypes;
     [Header("Truck Properties")]
-    [SerializeField] type truckType;
     [SerializeField] private float driveUpDistance = 0.4f;
     [SerializeField] private float driveAwayDistance = -0.5f;
     [SerializeField] private float movementSpeed = 2.0f;
@@ -28,6 +27,7 @@ public class TruckController : MonoBehaviour {
     private StoreObject myTruck;
 
     private enum type { delivery, pickup };
+    private type truckType;
 
     private Vector3 dest;
     private Vector3 oldPos;
@@ -49,20 +49,14 @@ public class TruckController : MonoBehaviour {
         myTruck = GetComponentInChildren<StoreObject>();
         audSrc = GetComponent<AudioSource>();
         dest = myTruck.transform.localPosition;
+        displayLights = GetComponentInChildren<OrderLight>();
         counter.text = "-";
         SetSpawnCounter();
-
-        if (truckType == type.pickup)
-        {
-            displayLights = GetComponentInChildren<OrderLight>();
-            if (displayLights == null)
-                print("Error getting display lights");
-        }
     }
 
     private void Update()
     {
-        switch(truckType)
+        switch (truckType)
         {
             case type.delivery:
                 DeliveryTruck();
@@ -100,9 +94,11 @@ public class TruckController : MonoBehaviour {
             else
             {
                 EndDelivery();
+                SwitchTypes();
             }
         }
     }
+
 
     // PICKUP TRUCK
     // move forward with order based on spawn timer, start loiter timer
@@ -128,6 +124,7 @@ public class TruckController : MonoBehaviour {
             else
             {
                 EndPickup();
+                SwitchTypes();
             }
         }
     }
@@ -254,5 +251,48 @@ public class TruckController : MonoBehaviour {
         counter.text = "-";
         displayLights.Reset();
         audSrc.PlayOneShot(leaveSFX);
+    }
+
+    // SWITCH TYPES
+    // change the type of truck using a weighted chance
+    private void SwitchTypes()
+    {
+        // delivery is 60%
+        // pickup is 40%
+        float[] prob = { 0.6f, 0.4f };
+        // weighted choice will return 0 for most common, 1 for least out of two variables
+        if (WeightedChoice(prob) <= 0)
+            truckType = type.delivery;
+        else
+            truckType = type.pickup;
+
+    }
+
+    // WEIGHTEDCHOICE
+    // Credit: unity manual
+    // takes two float values, adds them tgether.
+    // multiples value by unityengine random to get
+    // a random value below the total (in case our %s dont add to 1
+    // then it checks if that random number is less than the first element
+    // (which should be highest chance item) if so, return index
+    // else, you remove first element from random number, then check next element
+    private float WeightedChoice(float[] prob)
+    {
+        float total = 0;
+
+        foreach (float elem in prob)
+            total += elem;
+
+        float randomPoint = UnityEngine.Random.value * total;
+
+        for (int i = 0; i < prob.Length; i++)
+        {
+            if (randomPoint < prob[i])
+                return i;
+            else
+                randomPoint -= prob[i];
+        }
+        return prob.Length - 1;
+
     }
 }
