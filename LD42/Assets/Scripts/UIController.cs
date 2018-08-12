@@ -34,6 +34,8 @@ public class UIController : MonoBehaviour {
 
     public void MainMenuPressed()
     {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
         SceneManager.LoadScene("StartScreen");
     }
 

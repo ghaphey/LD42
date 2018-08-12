@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour {
             MovePlayer();
             RotateBottomHalf();
             RotateTopHalf();
-            ShowTarget();
             Interact();
         }
 	}
@@ -88,22 +87,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
-
-
-    private void ShowTarget()
-    {
-        /*
-        if (currHit != null && Vector3.Distance(topHalf.position, currHit.transform.position) <= interactRange)
-        {
-            targetArrow.GetComponentInChildren<MeshRenderer>().enabled = true;
-            targetArrow.transform.position = currHit.transform.position + Vector3.up * arrowOffset;
-        }
-        else
-        {
-            targetArrow.GetComponent<MeshRenderer>().enabled = false;
-
-        } */
-    }
+    
 
     // PICK UP
     // takes a passed object and sets it in the holding position

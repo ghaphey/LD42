@@ -81,7 +81,7 @@ public class TruckController : MonoBehaviour {
         // if the spawn timer has been reached, move forward with boxes
         if (spawnWait && Time.time >= spawnTimer)
         {
-            DeliverBoxes();
+            StartDelivery();
         }
         // while in delivery mode
         else if (spawnWait == false)
@@ -150,9 +150,11 @@ public class TruckController : MonoBehaviour {
     // DELIVER BOXES
     // Spawn boxes within the truck, set the dest vector, set the loiter timer
     // CONDITION: should not already be delivering, truck should be empty
-    private void DeliverBoxes()
+    private void StartDelivery()
     {
         spawnWait = false;
+        if (myTruck.NumObjects() > 0)
+            myTruck.RemoveObjects();
         SpawnBoxes();
         DriveTo(driveUpDistance);
         loiterTimer = Time.time + maxLoiterTime;
@@ -257,9 +259,9 @@ public class TruckController : MonoBehaviour {
     // change the type of truck using a weighted chance
     private void SwitchTypes()
     {
-        // delivery is 60%
-        // pickup is 40%
-        float[] prob = { 0.6f, 0.4f };
+        // delivery is 55%
+        // pickup is 45%
+        float[] prob = { 0.55f, 0.45f };
         // weighted choice will return 0 for most common, 1 for least out of two variables
         if (WeightedChoice(prob) <= 0)
             truckType = type.delivery;
