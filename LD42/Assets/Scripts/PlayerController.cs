@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour {
         currObj.parent = world;
         Rigidbody temp = currObj.GetComponent<Rigidbody>();
         temp.isKinematic = false;
-        temp.AddForce(transform.forward * throwForce, ForceMode.Impulse);
+        temp.AddForce(topHalf.forward * throwForce, ForceMode.Impulse);
         currObj = null;
         notHolding = true;
         audSrc.PlayOneShot(hitBoxSFX);

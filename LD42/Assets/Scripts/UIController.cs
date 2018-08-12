@@ -8,7 +8,7 @@ public class UIController : MonoBehaviour {
 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Slider volume;
-    // Update is called once per frame
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
