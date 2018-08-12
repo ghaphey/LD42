@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float hitForce = 2.0f;
     [SerializeField] private float throwForce = 10.0f;
     [SerializeField] private float interactRange = 1.0f;
+    [SerializeField] private float interactDamping = 0.025f;
     [Header("Objects")]
     [SerializeField] private Vector3 boxHold;
     [SerializeField] private Transform bottomHalf;
@@ -25,6 +26,8 @@ public class PlayerController : MonoBehaviour {
     private Transform world;
 
     private AudioSource audSrc;
+    private GameObject currHit;
+    private float interactTimeDamp = 0f;
 
 
     void Start () {
@@ -39,33 +42,40 @@ public class PlayerController : MonoBehaviour {
         RotateBottomHalf();
         RotateTopHalf();
         Interact();
+        ShowTarget();
 	}
+
+
     // INTERACT
     // If the player is within interact range of a box, it should be picked up
     // if the player is holding a box, and interact is pressed, it should be dropped (for now)
     private void Interact()
     {
-        if (Input.GetButtonDown("Interact"))
+        //Debug.DrawRay(topHalf.position, topHalf.forward * interactRange, Color.yellow);
+
+        if (Input.GetButtonDown("Interact") && Time.time >= interactTimeDamp)
         {
-            RaycastHit hit;
-            if(Physics.Raycast(topHalf.position, topHalf.forward,out hit, interactRange))
+            interactTimeDamp = Time.time + interactDamping;
+            //RaycastHit hit;
+            //if(Physics.Raycast(topHalf.position, topHalf.forward, out hit, interactRange))
+            if (Vector3.Distance(topHalf.position, currHit.transform.position) <= interactRange)
             {
-                if (hit.collider.tag == "Box" && notHolding)
+                if (currHit.tag == "Box" && notHolding)
                 {
-                    PickUp(hit.transform);
+                    PickUp(currHit.transform);
                 }
-                if (hit.collider.tag == "Box" && !notHolding)
+                if (currHit.tag == "Box" && !notHolding)
                 {
                     DropObject();
-                    PickUp(hit.transform);
+                    PickUp(currHit.transform);
                 }
-                else if (hit.collider.tag == "Shelf" && notHolding)
+                else if (currHit.tag == "Shelf" && notHolding)
                 {
-                    TakeObject(hit.transform);
+                    TakeObject(currHit.transform);
                 }
-                else if (hit.collider.tag == "Shelf" && !notHolding)
+                else if (currHit.tag == "Shelf" && !notHolding)
                 {
-                    GiveObject(hit.transform);
+                    GiveObject(currHit.transform);
                 }
             }
             else if (!notHolding)
@@ -73,6 +83,12 @@ public class PlayerController : MonoBehaviour {
                 DropObject();
             }
         }
+    }
+
+
+    private void ShowTarget()
+    {
+        throw new NotImplementedException();
     }
 
     // PICK UP
@@ -165,7 +181,7 @@ public class PlayerController : MonoBehaviour {
         int layermask = 1 << 9;
         if (Physics.Raycast(ray, out hit, 100, layermask))
         {
-            print(hit.collider.name);
+            //currHit = hit.collider.gameObject;
             topHalf.LookAt(new Vector3(hit.point.x, topHalf.position.y, hit.point.z));
         }
     }
@@ -175,9 +191,14 @@ public class PlayerController : MonoBehaviour {
     // this will mostly be for moving boxes aside
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Rigidbody rb = hit.collider.attachedRigidbody;
-        if (rb == null || rb.isKinematic)
-            return;
-        rb.velocity = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z) * hitForce;
+        if (hit.transform.tag != "Untagged")
+        {
+            Rigidbody rb = hit.collider.attachedRigidbody;
+            currHit = hit.gameObject;
+            print(currHit.name);
+            if (rb == null || rb.isKinematic)
+                return;
+            rb.velocity = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z) * hitForce;
+        }
     }
 }
