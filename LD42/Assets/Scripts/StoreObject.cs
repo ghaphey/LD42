@@ -30,10 +30,15 @@ public class StoreObject : MonoBehaviour {
         if (braces.Count > 0)
         {
             score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
-            Vector3 textLocation = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * floatTextOffset);
-            nText = Instantiate(floatTextPrefab, textLocation, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
-            nText.SetActive(false);
+            CreateFloatText();
         }
+    }
+
+    private void CreateFloatText()
+    {
+        Vector3 textLocation = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * floatTextOffset);
+        nText = Instantiate(floatTextPrefab, textLocation, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+        nText.SetActive(false);
     }
 
     private void Update()

@@ -8,6 +8,7 @@ TagManager:
   - Shelf
   - World
   - Score
+  - Canvas
   layers:
   - Default
   - TransparentFX

@@ -11,6 +11,8 @@ public class TruckController : MonoBehaviour {
     [Header("Score Properties")]
     [SerializeField] private int deliveryPoints = 25;
     [SerializeField] private int pickupPoints = 50;
+    [SerializeField] private GameObject floatTextPrefab;
+    [SerializeField] private Transform floatTextOffset;
     [Header("Truck Properties")]
     [SerializeField] private float driveUpDistance = 0.4f;
     [SerializeField] private float driveAwayDistance = -0.5f;
@@ -47,6 +49,7 @@ public class TruckController : MonoBehaviour {
     private OrderLight displayLights;
     private AudioSource audSrc;
     private ScoreBoard score;
+    private GameObject nText;
 
 
     void Start ()
@@ -58,6 +61,7 @@ public class TruckController : MonoBehaviour {
         displayLights = GetComponentInChildren<OrderLight>();
         counter.text = "-";
         SetSpawnCounter();
+        CreateFloatText();
     }
 
     private void Update()
@@ -212,7 +216,10 @@ public class TruckController : MonoBehaviour {
             score.AddDeliverScore(0);
         }
         else
+        {
             score.AddDeliverScore(deliveryPoints);
+            DisplayFloatText(deliveryPoints);
+        }
         DriveTo(driveAwayDistance);
         counter.text = "-";
         audSrc.PlayOneShot(leaveSFX);
@@ -266,6 +273,7 @@ public class TruckController : MonoBehaviour {
             audSrc.PlayOneShot(successSFX, 1f);
             audSrc.PlayOneShot(clappingSFX);
             score.AddPickupScore(pickupPoints);
+            DisplayFloatText(pickupPoints);
         }
         else
             score.AddPickupScore(0);
@@ -316,5 +324,18 @@ public class TruckController : MonoBehaviour {
         }
         return prob.Length - 1;
 
+    }
+
+    private void CreateFloatText()
+    {
+        Vector3 textLocation = Camera.main.WorldToScreenPoint(floatTextOffset.position);
+        nText = Instantiate(floatTextPrefab, textLocation, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+        nText.SetActive(false);
+    }
+
+    private void DisplayFloatText(int points)
+    {
+        nText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + points.ToString();
+        nText.SetActive(true);
     }
 }
