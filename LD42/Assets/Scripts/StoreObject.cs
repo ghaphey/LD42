@@ -27,9 +27,9 @@ public class StoreObject : MonoBehaviour {
     {
         ResetStoreTransforms();
         world = GameObject.FindGameObjectWithTag("World").transform;
-        if (braces.Count > 0)
+        score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
+        if (braces.Count > 0 && score != null)
         {
-            score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
             CreateFloatText();
         }
     }
@@ -46,7 +46,7 @@ public class StoreObject : MonoBehaviour {
         if (braces.Count > 0 && Time.time > timer)
         {
             timer += boxPointsInterval;
-            if (storedObjects.Count != 0)
+            if (storedObjects.Count != 0 && score != null)
             {
                 int calcBoxPoints = storedObjects.Count * storedBoxPoints;
                 DisplayFloatText(calcBoxPoints);
@@ -157,8 +157,11 @@ public class StoreObject : MonoBehaviour {
 
     private void DisplayFloatText(int points)
     {
-        nText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + points.ToString();
-        nText.SetActive(true);
+        if (score != null)
+        {
+            nText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + points.ToString();
+            nText.SetActive(true);
+        }
     }
 
 }

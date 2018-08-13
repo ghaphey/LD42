@@ -9,7 +9,7 @@ public class ScoreBoard : MonoBehaviour {
 
     private int shelfScore = 0;
     private int deliveryScore = 0;
-    private int PickupScore = 0;
+    private int pickupScore = 0;
     private int incineratorScore = 0;
     private int timer = 0;
 
@@ -36,10 +36,8 @@ public class ScoreBoard : MonoBehaviour {
 
     private void UpdateMainScore()
     {
-        totalScore = shelfScore + deliveryScore + PickupScore + incineratorScore;
+        totalScore = shelfScore + deliveryScore + pickupScore + incineratorScore;
         scoreText.text = totalScore.ToString();
-        if (totalScore != 0)
-            pps = totalScore / timer;
     }
 
     public void AddShelfScore (int points)
@@ -55,12 +53,25 @@ public class ScoreBoard : MonoBehaviour {
 
     public void AddPickupScore(int points)
     {
-        PickupScore += points;
+        pickupScore += points;
         numPickups++;
     }
 
     public void AddIncineratorScore(int points)
     {
         incineratorScore += points;
+    }
+
+    public string OutputScoreScreenText()
+    {
+        totalScore = shelfScore + deliveryScore + pickupScore + incineratorScore;
+        pps = totalScore / timer;
+        return numPickups.ToString() + " / " + pickupScore.ToString() + "\n\n"
+               + numDeliveries.ToString() + " / " + deliveryScore.ToString() + "\n\n"
+               + shelfScore.ToString() + "\n\n"
+               + incineratorScore.ToString() + "\n\n"
+               + totalScore + "\n\n"
+               + timer.ToString() + " seconds\n\n"
+               + pps.ToString();
     }
 }

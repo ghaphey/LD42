@@ -9,9 +9,11 @@ public class UIController : MonoBehaviour {
 
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject tutorialPage;
+    [SerializeField] private Text scoreText;
     [SerializeField] private Slider volume;
     [SerializeField] private Slider numTrucks;
     [SerializeField] private Text numTrucksText;
+    [SerializeField] private ScoreBoard score;
 
     private int trucksRemaining = 20;
 
@@ -35,6 +37,7 @@ public class UIController : MonoBehaviour {
             else
             {
                 pauseMenu.SetActive(true);
+                pauseMenu.GetComponent<RectTransform>().SetAsLastSibling();
                 Time.timeScale = 0f;
             }
         }
@@ -51,7 +54,9 @@ public class UIController : MonoBehaviour {
 
     private void EndGame()
     {
-        throw new NotImplementedException();
+        scoreText.text = score.OutputScoreScreenText();
+        scoreText.transform.parent.gameObject.SetActive(true);
+        scoreText.transform.parent.SetAsLastSibling();
     }
 
     public void StartPressed()
