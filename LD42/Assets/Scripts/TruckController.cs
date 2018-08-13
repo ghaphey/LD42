@@ -87,6 +87,8 @@ public class TruckController : MonoBehaviour {
         // while in delivery mode
         else if (spawnWait == false)
         {
+            if (loiterTimer - Time.time < 10)
+                counter.faceColor = Color.red;
             if ((Time.time < loiterTimer) && (myTruck.NumObjects() > 0))
             {
                 counter.text = Mathf.FloorToInt(loiterTimer - Time.time).ToString();
@@ -95,7 +97,7 @@ public class TruckController : MonoBehaviour {
             else
             {
                 EndDelivery();
-                counter.color = Color.white;
+                counter.faceColor = Color.white;
                 trucksRemaining.TruckDepart();
                 SwitchTypes();
             }
@@ -120,7 +122,7 @@ public class TruckController : MonoBehaviour {
         else if (spawnWait == false)
         {
             if (loiterTimer - Time.time < 10)
-                counter.color = Color.red;
+                counter.faceColor = Color.red;
             // if the cargo matches order, can leave right away
             if (Time.time < loiterTimer && !CompareCargo())
             {
@@ -129,7 +131,7 @@ public class TruckController : MonoBehaviour {
             else
             {
                 EndPickup();
-                counter.color = Color.white;
+                counter.faceColor = Color.white;
                 trucksRemaining.TruckDepart();
                 SwitchTypes();
             }
