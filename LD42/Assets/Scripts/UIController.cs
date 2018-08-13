@@ -7,7 +7,20 @@ using UnityEngine.SceneManagement;
 public class UIController : MonoBehaviour {
 
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject tutorialPage;
     [SerializeField] private Slider volume;
+    [SerializeField] private Slider numTrucks;
+    [SerializeField] private Text numTrucksText;
+
+    private int trucksRemaining = 5;
+
+    private void Start()
+    {
+        Time.timeScale = 0f;
+        if (!tutorialPage.activeSelf)
+            tutorialPage.SetActive(true);
+
+    }
 
     void Update()
     {
@@ -24,6 +37,24 @@ public class UIController : MonoBehaviour {
                 Time.timeScale = 0f;
             }
         }
+    }
+
+    public void StartPressed()
+    {
+        numTrucksText.text = trucksRemaining.ToString();
+        Time.timeScale = 1f;
+        tutorialPage.SetActive(false);
+    }
+
+    public void TruckDepart()
+    {
+        trucksRemaining--;
+    }
+
+    public int TrucksRemain()
+
+    {
+        return trucksRemaining;
     }
 
     public void ResumePressed()
@@ -47,5 +78,11 @@ public class UIController : MonoBehaviour {
     public void AdjustVolume()
     {
         AudioListener.volume = volume.value;
+    }
+
+    public void AdjustNumTrucks()
+    {
+        trucksRemaining = Mathf.FloorToInt(numTrucks.value);
+        numTrucks.GetComponentInChildren<Text>().text = trucksRemaining.ToString();
     }
 }

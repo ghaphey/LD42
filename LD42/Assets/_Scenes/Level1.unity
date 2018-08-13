@@ -22848,11 +22848,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114249579589135156, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 224263396724605634, guid: 2be4123c229b8d64dbc096a6b803077a,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -22943,74 +22938,13 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114953559904394002, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1326195904}
-    - target: {fileID: 114538843125304112, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1326195904}
-    - target: {fileID: 114627740194673262, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1326195904}
-    - target: {fileID: 114538843125304112, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResumePressed
-      objectReference: {fileID: 0}
-    - target: {fileID: 114953559904394002, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MainMenuPressed
-      objectReference: {fileID: 0}
-    - target: {fileID: 114627740194673262, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitPressed
-      objectReference: {fileID: 0}
-    - target: {fileID: 114249579589135156, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114249579589135156, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114249579589135156, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1326195904}
-    - target: {fileID: 114249579589135156, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AdjustVolume
-      objectReference: {fileID: 0}
-    - target: {fileID: 114249579589135156, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1616428886431426, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 1192921713723664, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
+      propertyPath: m_Name
+      value: Canvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
   m_IsPrefabAsset: 0
---- !u!114 &1326195904 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114376728894755060, guid: 2be4123c229b8d64dbc096a6b803077a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1326195903}
-  m_Script: {fileID: 11500000, guid: a3a6553bc77f8a04cac67a3a0f1c9abd, type: 3}
 --- !u!43 &1337411662
 Mesh:
   m_ObjectHideFlags: 0
