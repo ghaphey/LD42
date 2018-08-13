@@ -14,6 +14,7 @@ public class ConveyorBehavior : MonoBehaviour {
             transform.GetComponent<Rigidbody>().velocity = conveyorForce 
                                                             * collision.transform.forward  
                                                             * Time.deltaTime;
+            transform.rotation = Quaternion.Euler(new Vector3(0.0f, transform.rotation.y, transform.rotation.z));
             transform.GetComponent<Rigidbody>().freezeRotation = true;
         }
         else
