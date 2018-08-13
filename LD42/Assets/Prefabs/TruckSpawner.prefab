@@ -379,7 +379,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705683971487784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.4000015, y: 0.85, z: 1.7999992}
+  m_LocalPosition: {x: -7.4, y: 0.85, z: -1.7}
   m_LocalScale: {x: 4.600002, y: 1.6999999, z: 1.500001}
   m_Children:
   - {fileID: 4103168182339286}
@@ -2520,6 +2520,7 @@ MonoBehaviour:
   - {fileID: 1423168138563060, guid: bf5392ce2d108f44e87d05a6ddd0a3a3, type: 2}
   - {fileID: 1423168138563060, guid: cadea601997562d46970e9948f911561, type: 2}
   - {fileID: 1423168138563060, guid: 588dceba29bfc7547afe88225dc2d0a0, type: 2}
+  trucksRemaining: {fileID: 0}
   driveUpDistance: 1.006
   driveAwayDistance: 0.02
   movementSpeed: 1.5

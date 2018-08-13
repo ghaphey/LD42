@@ -7,6 +7,7 @@ using TMPro;
 public class TruckController : MonoBehaviour {
 
     [SerializeField] private List<GameObject> boxTypes;
+    [SerializeField] private UIController trucksRemaining;
     [Header("Truck Properties")]
     [SerializeField] private float driveUpDistance = 0.4f;
     [SerializeField] private float driveAwayDistance = -0.5f;
@@ -14,15 +15,15 @@ public class TruckController : MonoBehaviour {
     [SerializeField] private int maxSpawnTime = 30;
     [SerializeField] private int minSpawnTime = 1;
     [Header("Counter Properties")]
-    [SerializeField] TextMeshPro counter;
+    [SerializeField] private TextMeshPro counter;
     [SerializeField] private int maxLoiterTime = 20;
     [Header("Sound Properties")]
-    [SerializeField] AudioClip arriveSFX;
-    [SerializeField] AudioClip leaveSFX;
-    [SerializeField] AudioClip hitSFX;
-    [SerializeField] AudioClip honkSFX;
-    [SerializeField] AudioClip successSFX;
-    [SerializeField] AudioClip clappingSFX;
+    [SerializeField] private AudioClip arriveSFX;
+    [SerializeField] private AudioClip leaveSFX;
+    [SerializeField] private AudioClip hitSFX;
+    [SerializeField] private AudioClip honkSFX;
+    [SerializeField] private AudioClip successSFX;
+    [SerializeField] private AudioClip clappingSFX;
 
     private StoreObject myTruck;
 
@@ -56,15 +57,15 @@ public class TruckController : MonoBehaviour {
 
     private void Update()
     {
-        switch (truckType)
-        {
-            case type.delivery:
-                DeliveryTruck();
-                break;
-            case type.pickup:
-                PickupTruck();
-                break;
-        }
+            switch (truckType)
+            {
+                case type.delivery:
+                    DeliveryTruck();
+                    break;
+                case type.pickup:
+                    PickupTruck();
+                    break;
+            }
 
     }
 
@@ -94,6 +95,8 @@ public class TruckController : MonoBehaviour {
             else
             {
                 EndDelivery();
+                counter.color = Color.white;
+                trucksRemaining.TruckDepart();
                 SwitchTypes();
             }
         }
@@ -116,6 +119,8 @@ public class TruckController : MonoBehaviour {
         }
         else if (spawnWait == false)
         {
+            if (loiterTimer - Time.time < 10)
+                counter.color = Color.red;
             // if the cargo matches order, can leave right away
             if (Time.time < loiterTimer && !CompareCargo())
             {
@@ -124,6 +129,8 @@ public class TruckController : MonoBehaviour {
             else
             {
                 EndPickup();
+                counter.color = Color.white;
+                trucksRemaining.TruckDepart();
                 SwitchTypes();
             }
         }

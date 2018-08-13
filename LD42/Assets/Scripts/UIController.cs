@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class UIController : MonoBehaviour {
 
@@ -37,6 +38,20 @@ public class UIController : MonoBehaviour {
                 Time.timeScale = 0f;
             }
         }
+        if (trucksRemaining <= 0)
+        {
+            Time.timeScale = 0f;
+            EndGame();
+        }
+        else if ( trucksRemaining < 5)
+        {
+            numTrucksText.color = Color.red;
+        }
+    }
+
+    private void EndGame()
+    {
+        throw new NotImplementedException();
     }
 
     public void StartPressed()
@@ -48,7 +63,9 @@ public class UIController : MonoBehaviour {
 
     public void TruckDepart()
     {
+        numTrucksText.color = Color.white;
         trucksRemaining--;
+        numTrucksText.text = trucksRemaining.ToString();
     }
 
     public int TrucksRemain()
