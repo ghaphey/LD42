@@ -35,6 +35,9 @@ public class StoreObject : MonoBehaviour {
         }
     }
 
+    // CREATE FLOAT TEXT
+    // create a floating text at offset, so we have one instead of 
+    // needless re-instantiation throughout
     private void CreateFloatText()
     {
         Vector3 textLocation = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * floatTextOffset);
@@ -137,6 +140,9 @@ public class StoreObject : MonoBehaviour {
         return true;
     }
 
+    // REMOVE OBJECTS
+    // destroy all objects remaining in list,
+    // then clear list
     public void RemoveObjects()
     {
         foreach (GameObject obj in storedObjects)
@@ -156,6 +162,8 @@ public class StoreObject : MonoBehaviour {
         return storedObjects.Count;
     }
 
+    // DISPLAY FLOAT TEXT
+    // Sets the floating text as active to begin animation and sets its value
     private void DisplayFloatText(int points)
     {
         if (score != null)

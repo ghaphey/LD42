@@ -264,6 +264,7 @@ public class TruckController : MonoBehaviour {
 
     // END PICKUP
     // resets spawn counter, drive away
+    // also plays audio, displays text and updates score
     private void EndPickup()
     {
         spawnWait = true;
@@ -326,6 +327,9 @@ public class TruckController : MonoBehaviour {
 
     }
 
+    // CREATE FLOAT TEXT
+    // create a floating text at offset, so we have one instead of 
+    // needless re-instantiation throughout
     private void CreateFloatText()
     {
         Vector3 textLocation = Camera.main.WorldToScreenPoint(floatTextOffset.position);
@@ -333,6 +337,8 @@ public class TruckController : MonoBehaviour {
         nText.SetActive(false);
     }
 
+    // DISPLAY FLOAT TEXT
+    // Sets the floating text as active to begin animation and sets its value
     private void DisplayFloatText(int points)
     {
         nText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + points.ToString();

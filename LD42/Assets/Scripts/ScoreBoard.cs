@@ -24,6 +24,7 @@ public class ScoreBoard : MonoBehaviour {
         scoreText.text = "0";
 	}
 
+    // ONLY UPDATE SCORE ONCE PER SECOND
     private void Update()
     {
         if (Time.time > timer)
@@ -61,6 +62,7 @@ public class ScoreBoard : MonoBehaviour {
         incineratorScore += points;
     }
 
+    // CREATES A STRING FOR THE FINAL SCORE SCREEN
     public string OutputScoreScreenText()
     {
         totalScore = shelfScore + deliveryScore + pickupScore + incineratorScore;

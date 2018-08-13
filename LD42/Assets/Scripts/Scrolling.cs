@@ -9,7 +9,8 @@ public class Scrolling : MonoBehaviour {
 
     Vector2 offset = new Vector2(0f, 0f);
 
-	// Update is called once per frame
+	// SCROLLING
+    // adjusts UV of conveyor continously to give illision of a moving conveyor belt
 	void Update ()
     {
         offset += new Vector2(0, vectorAddOffset) * Time.deltaTime;
