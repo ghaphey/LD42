@@ -9,6 +9,7 @@ TagManager:
   - World
   - Score
   - Canvas
+  - Conveyor
   layers:
   - Default
   - TransparentFX

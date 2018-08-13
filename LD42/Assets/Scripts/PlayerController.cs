@@ -198,5 +198,9 @@ public class PlayerController : MonoBehaviour {
                 return;
             rb.velocity = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z) * hitForce;
         }
+        else if (hit.transform.tag == "Conveyor")
+        {
+            print("conveyor moving player");
+        }
     }
 }

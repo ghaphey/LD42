@@ -30,7 +30,6 @@ public class ScoreBoard : MonoBehaviour {
         {
             timer++;
             UpdateMainScore();
-            print("update");
         }
     }
 
