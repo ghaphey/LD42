@@ -42,15 +42,20 @@ public class StoreObject : MonoBehaviour {
     // must positions after removal w/ resetstoretransforms
     public Transform DispenseObject()
     {
-        if (storedObjects.Count > 0)
-        {
-            GameObject temp = storedObjects[0];
-            storedObjects.RemoveAt(0);
-            ResetStoreTransforms();
-            temp.GetComponent<BoxCollider>().enabled = true;
-            return temp.transform;
-        }
-        return null;
+        if (storedObjects.Count <= 0)
+            return null;
+        int index = 0;
+        // if this object has braces, then its a shelf, otherwise its on a truckbed
+        // switches between FIFO (shelf) and truckbed (FILO)
+        if (braces.Count ==  0)
+            index = storedObjects.Count - 1;
+        
+
+        GameObject temp = storedObjects[index];
+        storedObjects.RemoveAt(index);
+        ResetStoreTransforms();
+        temp.GetComponent<BoxCollider>().enabled = true;
+        return temp.transform;
     }
 
     // RESET STORE TRANSFORMS
