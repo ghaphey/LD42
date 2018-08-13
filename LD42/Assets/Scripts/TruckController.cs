@@ -8,6 +8,9 @@ public class TruckController : MonoBehaviour {
 
     [SerializeField] private List<GameObject> boxTypes;
     [SerializeField] private UIController trucksRemaining;
+    [Header("Score Properties")]
+    [SerializeField] private int deliveryPoints = 25;
+    [SerializeField] private int pickupPoints = 50;
     [Header("Truck Properties")]
     [SerializeField] private float driveUpDistance = 0.4f;
     [SerializeField] private float driveAwayDistance = -0.5f;
@@ -43,10 +46,12 @@ public class TruckController : MonoBehaviour {
 
     private OrderLight displayLights;
     private AudioSource audSrc;
+    private ScoreBoard score;
 
 
     void Start ()
     {
+        score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
         myTruck = GetComponentInChildren<StoreObject>();
         audSrc = GetComponent<AudioSource>();
         dest = myTruck.transform.localPosition;
@@ -204,7 +209,10 @@ public class TruckController : MonoBehaviour {
         {
             audSrc.PlayOneShot(honkSFX);
             audSrc.PlayOneShot(hitSFX);
+            score.AddDeliverScore(0);
         }
+        else
+            score.AddDeliverScore(deliveryPoints);
         DriveTo(driveAwayDistance);
         counter.text = "-";
         audSrc.PlayOneShot(leaveSFX);
@@ -257,7 +265,10 @@ public class TruckController : MonoBehaviour {
         {
             audSrc.PlayOneShot(successSFX, 1f);
             audSrc.PlayOneShot(clappingSFX);
+            score.AddPickupScore(pickupPoints);
         }
+        else
+            score.AddPickupScore(0);
         DriveTo(driveAwayDistance);
         counter.text = "-";
         displayLights.Reset();

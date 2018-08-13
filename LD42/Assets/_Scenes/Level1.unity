@@ -22939,6 +22939,10 @@ Prefab:
       propertyPath: m_Text
       value: 00
       objectReference: {fileID: 0}
+    - target: {fileID: 1713417196350332, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
+      propertyPath: m_TagString
+      value: Score
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
   m_IsPrefabAsset: 0
@@ -31079,7 +31083,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1713417196350332, guid: 2be4123c229b8d64dbc096a6b803077a,
     type: 2}
   m_PrefabInternal: {fileID: 1326195903}
---- !u!114 &1953522984
+--- !u!114 &1953522987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

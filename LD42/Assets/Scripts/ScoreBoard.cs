@@ -15,6 +15,8 @@ public class ScoreBoard : MonoBehaviour {
 
     private int totalScore = 0;
     private float pps = 0f;
+    private int numDeliveries = 0;
+    private int numPickups = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -48,11 +50,13 @@ public class ScoreBoard : MonoBehaviour {
     public void AddDeliverScore (int points)
     {
         deliveryScore += points;
+        numDeliveries++;
     }
 
     public void AddPickupScore(int points)
     {
         PickupScore += points;
+        numPickups++;
     }
 
     public void AddIncineratorScore(int points)
