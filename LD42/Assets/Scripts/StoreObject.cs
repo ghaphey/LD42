@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class StoreObject : MonoBehaviour {
 
@@ -9,15 +10,44 @@ public class StoreObject : MonoBehaviour {
     [SerializeField] public int maxObjects = 3;
     [SerializeField] private float objectSizeOffset = 0.6f;
     [SerializeField] private float ejectForce = 500.0f;
+    [SerializeField] private int storedBoxPoints = 1;
+    [SerializeField] private int boxPointsInterval = 1;
+    [SerializeField] private GameObject floatTextPrefab;
+    [SerializeField] private float floatTextOffset = 1.5f;
 
     [SerializeField] private List<Animator> braces = new List<Animator> { };
 
     private Transform world;
+    private ScoreBoard score;
+    private GameObject nText;
+
+    private int timer = 0;
 
     private void Start()
     {
         ResetStoreTransforms();
         world = GameObject.FindGameObjectWithTag("World").transform;
+        if (braces.Count > 0)
+        {
+            score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
+            Vector3 textLocation = Camera.main.WorldToScreenPoint(transform.position + Vector3.up * floatTextOffset);
+            nText = Instantiate(floatTextPrefab, textLocation, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+            nText.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (braces.Count > 0 && Time.time > timer)
+        {
+            timer += boxPointsInterval;
+            if (storedObjects.Count != 0)
+            {
+                int calcBoxPoints = storedObjects.Count * storedBoxPoints;
+                DisplayFloatText(calcBoxPoints);
+                score.AddShelfScore(calcBoxPoints);
+            }
+        }
     }
 
     // RECEIVE OBJECT
@@ -118,6 +148,12 @@ public class StoreObject : MonoBehaviour {
     public int NumObjects()
     {
         return storedObjects.Count;
+    }
+
+    private void DisplayFloatText(int points)
+    {
+        nText.GetComponentInChildren<TextMeshProUGUI>().text = "+" + points.ToString();
+        nText.SetActive(true);
     }
 
 }

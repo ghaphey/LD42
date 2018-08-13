@@ -13,7 +13,7 @@ public class UIController : MonoBehaviour {
     [SerializeField] private Slider numTrucks;
     [SerializeField] private Text numTrucksText;
 
-    private int trucksRemaining = 5;
+    private int trucksRemaining = 20;
 
     private void Start()
     {
