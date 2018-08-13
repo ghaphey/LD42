@@ -287,9 +287,9 @@ public class TruckController : MonoBehaviour {
     // change the type of truck using a weighted chance
     private void SwitchTypes()
     {
-        // delivery is 55%
-        // pickup is 45%
-        float[] prob = { 0.55f, 0.45f };
+        // delivery is 60%
+        // pickup is 40%
+        float[] prob = { 0.60f, 0.40f };
         // weighted choice will return 0 for most common, 1 for least out of two variables
         if (WeightedChoice(prob) <= 0)
             truckType = type.delivery;

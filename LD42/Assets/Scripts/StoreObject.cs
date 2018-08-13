@@ -27,9 +27,10 @@ public class StoreObject : MonoBehaviour {
     {
         ResetStoreTransforms();
         world = GameObject.FindGameObjectWithTag("World").transform;
-        score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
-        if (braces.Count > 0 && score != null)
+        GameObject scoreTemp = GameObject.FindGameObjectWithTag("Score");
+        if (braces.Count > 0 && scoreTemp != null)
         {
+            score = scoreTemp.GetComponent<ScoreBoard>();
             CreateFloatText();
         }
     }

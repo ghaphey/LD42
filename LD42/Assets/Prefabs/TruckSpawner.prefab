@@ -2584,15 +2584,15 @@ MonoBehaviour:
   - {fileID: 1423168138563060, guid: 588dceba29bfc7547afe88225dc2d0a0, type: 2}
   trucksRemaining: {fileID: 0}
   deliveryPoints: 25
-  pickupPoints: 50
+  pickupPoints: 75
   floatTextPrefab: {fileID: 1625870254381182, guid: 9e8fe18f91b1eaa48aa40edcf06c30f1,
     type: 2}
   floatTextOffset: {fileID: 4310641616577140}
   driveUpDistance: 0.434
   driveAwayDistance: -0.56
   movementSpeed: 1.5
-  maxSpawnTime: 40
-  minSpawnTime: 10
+  maxSpawnTime: 30
+  minSpawnTime: 5
   counter: {fileID: 114277780102335508}
   maxLoiterTime: 25
   arriveSFX: {fileID: 8300000, guid: 9c11799888de39d48988ea4ebbc279fd, type: 3}
