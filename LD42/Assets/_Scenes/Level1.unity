@@ -20274,43 +20274,79 @@ Prefab:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 114870320782384906, guid: 2be4123c229b8d64dbc096a6b803077a,
+    - target: {fileID: 224930044109873628, guid: 2be4123c229b8d64dbc096a6b803077a,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 224930044109873628, guid: 2be4123c229b8d64dbc096a6b803077a,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -439
+      objectReference: {fileID: 0}
+    - target: {fileID: 114998585637922504, guid: 2be4123c229b8d64dbc096a6b803077a,
         type: 2}
       propertyPath: m_Text
-      value: 00
+      value: Total Number of Trucks
       objectReference: {fileID: 0}
-    - target: {fileID: 1713417196350332, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
-      propertyPath: m_TagString
-      value: Score
-      objectReference: {fileID: 0}
-    - target: {fileID: 224019156854741116, guid: 2be4123c229b8d64dbc096a6b803077a,
+    - target: {fileID: 224878308435254970, guid: 2be4123c229b8d64dbc096a6b803077a,
         type: 2}
-      propertyPath: m_RootOrder
+      propertyPath: m_SizeDelta.x
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 224878308435254970, guid: 2be4123c229b8d64dbc096a6b803077a,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 114998585637922504, guid: 2be4123c229b8d64dbc096a6b803077a,
+        type: 2}
+      propertyPath: m_FontData.m_FontStyle
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 224885277936764690, guid: 2be4123c229b8d64dbc096a6b803077a,
+    - target: {fileID: 114582452091483240, guid: 2be4123c229b8d64dbc096a6b803077a,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 3
+      propertyPath: m_Text
+      value: 'Shelved Boxes Generate 1pt/second
+
+        Correct Pickup Order: 50pts
+
+        Unload Truck in Time: 25pts
+
+        Incinerate a Box: 1pt'
       objectReference: {fileID: 0}
-    - target: {fileID: 224551647255701096, guid: 2be4123c229b8d64dbc096a6b803077a,
+    - target: {fileID: 224266686034126626, guid: 2be4123c229b8d64dbc096a6b803077a,
         type: 2}
-      propertyPath: m_RootOrder
+      propertyPath: m_AnchoredPosition.y
+      value: 71
+      objectReference: {fileID: 0}
+    - target: {fileID: 224157678483771926, guid: 2be4123c229b8d64dbc096a6b803077a,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 224878308435254970, guid: 2be4123c229b8d64dbc096a6b803077a,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -122
+      objectReference: {fileID: 0}
+    - target: {fileID: 224157678483771926, guid: 2be4123c229b8d64dbc096a6b803077a,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -150
+      objectReference: {fileID: 0}
+    - target: {fileID: 224266686034126626, guid: 2be4123c229b8d64dbc096a6b803077a,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054205216207094, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1616428886431426, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
+      propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224774219236239396, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 223638463892231024, guid: 2be4123c229b8d64dbc096a6b803077a,
-        type: 2}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192921713723664, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
-      propertyPath: m_TagString
-      value: Canvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2be4123c229b8d64dbc096a6b803077a, type: 2}
@@ -28733,22 +28769,6 @@ Mesh:
   m_MeshMetrics[0]: 1
   m_MeshMetrics[1]: 1
   m_MeshOptimized: 0
---- !u!1 &1953522983 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1713417196350332, guid: 2be4123c229b8d64dbc096a6b803077a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1326195903}
---- !u!114 &1953522987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1953522983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6fc59e7eb34e0c4082dff0675d8ac30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1964604128
 GameObject:
   m_ObjectHideFlags: 0
